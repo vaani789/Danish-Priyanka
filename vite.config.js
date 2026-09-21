@@ -1,0 +1,3 @@
+import { defineConfig } from 'vite';
+const siteUrl=(process.env.SITE_URL||'').replace(/\/$/,'');
+export default defineConfig({base:'./',plugins:[{name:'wedding-social-metadata',transformIndexHtml(html){const origin=siteUrl?`${siteUrl}/`:'';const tags=[{tag:'meta',attrs:{property:'og:image',content:origin+'social-preview.jpg'}},{tag:'meta',attrs:{property:'og:image:alt',content:'Danish Weds Priyanka — 21 November 2026 — Noor E Mahal, Mansa'}},{tag:'meta',attrs:{name:'twitter:image',content:origin+'social-preview.jpg'}}];if(siteUrl)tags.push({tag:'meta',attrs:{property:'og:url',content:origin}},{tag:'link',attrs:{rel:'canonical',href:origin}});return{html,tags}}}]});
