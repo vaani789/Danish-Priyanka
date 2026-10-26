@@ -1,7 +1,241 @@
-import React,{useEffect,useRef,useState} from 'react';
-import {weddingData as d} from '../data';
-import {saveDate,shareInvitation,useSaved} from '../helpers';
-import {useMagic} from './Magic';
-export function VenueReveal({view}){return <section id="venue" className="venue-section"><div className="section-heading reveal"><p className="eyebrow">THE DESTINATION</p><h2>An evening at <i>the palace.</i></h2><p>A beautiful place for a beautiful beginning.</p></div><div className="venue-gallery reveal">{d.venueGallery.map((image,i)=><button key={image.src} className="venue-image" data-cursor="VIEW" onClick={()=>view(image,d.venueGallery,i)}><img src={image.src} alt={image.alt} loading="lazy"/><span className="venue-caption"><span><small>{d.venue.city.toUpperCase()}</small><strong>{d.venue.name}</strong></span><span>VIEW THE PALACE ↗</span></span></button>)}</div><div className="map-section reveal"><div><p className="eyebrow">FIND YOUR WAY TO US</p><h3>{d.venue.name}, {d.venue.city}</h3>{d.venue.address&&<p>{d.venue.address}</p>}</div><a className="button light" data-cursor="VISIT" href={d.venue.mapUrl} target="_blank" rel="noreferrer">OPEN IN GOOGLE MAPS <span>↗</span></a></div></section>}
-export function Blessings({view}){const[lit,setLit]=useSaved('diya',false),[secret,setSecret]=useSaved('secret',false);const taps=useRef(0);const{burst,notify}=useMagic();return <section className={`blessings section ${lit?'lit':''}`}><p className="eyebrow reveal">A LITTLE LIGHT. A LOT OF LOVE.</p><h2 className="reveal">Your blessings,<br/>our <i>brightest beginning.</i></h2><button className={`diya ${lit?'lit':''}`} data-cursor="LIGHT" aria-label={lit?'Diya is lit':'Light the diya'} aria-pressed={lit} onClick={()=>{setLit(true);burst('✦');notify('May this new beginning always be filled with light.')}}><span aria-hidden="true">🪔</span><small>{lit?'A LIGHT FOR OUR FOREVER':'LIGHT IT ✧'}</small></button><p className="diya-message">{lit?'May this new beginning always be filled with light.':'A small flame. A heartfelt wish.'}</p><button className="button" onClick={()=>{burst('♥',50,70,20);notify('Your blessings mean the world to us.')}}>SEND A BLESSING <span>♡</span></button><div className="blessing-monogram">D <button aria-label="Little heart" className={secret?'discovered':''} onClick={()=>{taps.current++;if(taps.current%3===0){setSecret(true);burst('🌹');view({src:d.images.main,alt:'You found our little secret ❤️ — Some moments are worth discovering.'})}}}>♥</button> P</div></section>}
-export function FinalInvitation({view}){const{notify,burst}=useMagic();const end=useRef(null);useEffect(()=>{const observer=new IntersectionObserver(entries=>{if(entries[0].isIntersecting){burst('✦',50,85,12);observer.disconnect()}},{threshold:.35});if(end.current)observer.observe(end.current);return()=>observer.disconnect()},[]);return <><section className="portrait-section section"><div className="portrait-frame reveal"><button data-cursor="VIEW" onClick={()=>view({src:d.images.main,alt:'Danish and Priyanka together'})}><img src={d.images.main} alt="Danish and Priyanka, together" loading="lazy"/></button></div><div className="portrait-copy reveal"><p className="eyebrow">TOGETHER IS</p><h2>A beautiful<br/>place <i>to be.</i></h2><p className="signature">Danish & Priyanka</p><p>{d.date.display}</p></div></section><section id="invitation" className="save-section section"><div className="save-card reveal"><p className="eyebrow">SAVE THE DATE</p><h2>Danish <i>&</i> Priyanka</h2><div className="calendar-date"><span>SATURDAY</span><strong>21</strong><span>NOVEMBER<br/>2026</span></div><p className="eyebrow">{d.venue.name} · {d.venue.city}</p><button className="button" onClick={saveDate}>ADD TO CALENDAR <span>↓</span></button><p className="small-note">A whole day for love. Timings to follow.</p></div><div className="share-love reveal"><span>♡</span><p className="eyebrow">SHARE THE LOVE</p><h3>Beautiful moments<br/>are better <i>together.</i></h3><button className="outline-button" onClick={()=>shareInvitation(notify)}>SHARE INVITATION ↗</button></div></section><footer className="finale" ref={end}><div className="finale-image groom"><img src={d.images.groom} alt="Danish says namaste" loading="lazy"/></div><div className="finale-copy"><p className="eyebrow">WE CAN'T WAIT TO CELEBRATE WITH YOU</p><h2>With <i>love,</i><br/>Danish & Priyanka</h2><p>See you on {d.date.display} ♡</p><p>{d.venue.name} · {d.venue.city}</p><div className="footer-actions"><a href={d.venue.mapUrl} target="_blank" rel="noreferrer">VIEW LOCATION ↗</a><button onClick={saveDate}>SAVE THE DATE ↓</button><button onClick={()=>shareInvitation(notify)}>SHARE INVITATION ↗</button></div><div className="monogram">D <span>♥</span> P</div></div><div className="finale-image bride"><img src={d.images.bride} alt="Priyanka says namaste" loading="lazy"/></div></footer></>}
+import React, { useEffect, useRef, useState } from "react";
+import { weddingData as d } from "../data";
+import { saveDate, shareInvitation, useSaved } from "../helpers";
+import { useMagic } from "./Magic";
+export function VenueReveal({ view }) {
+  return (
+    <section id="venue" className="venue-section">
+      <div className="section-heading reveal">
+        <p className="eyebrow">THE DESTINATION</p>
+        <h2>
+          An evening at <i>the palace.</i>
+        </h2>
+        <p>A beautiful place for a beautiful beginning.</p>
+      </div>
+      <div className="venue-gallery reveal">
+        {d.venueGallery.map((image, i) => (
+          <button
+            key={image.src}
+            className="venue-image"
+            data-cursor="VIEW"
+            onClick={() => view(image, d.venueGallery, i)}
+          >
+            <img src={image.src} alt={image.alt} loading="lazy" />
+            <span className="venue-caption">
+              <span>
+                <small>{d.venue.city.toUpperCase()}</small>
+                <strong>{d.venue.name}</strong>
+              </span>
+              <span>VIEW THE PALACE ↗</span>
+            </span>
+          </button>
+        ))}
+      </div>
+      <div className="map-section reveal">
+        <div>
+          <p className="eyebrow">FIND YOUR WAY TO US</p>
+          <h3>
+            {d.venue.name}, {d.venue.city}
+          </h3>
+          {d.venue.address && <p>{d.venue.address}</p>}
+        </div>
+        <a
+          className="button light"
+          data-cursor="VISIT"
+          href={d.venue.mapUrl}
+          target="_blank"
+          rel="noreferrer"
+        >
+          OPEN IN GOOGLE MAPS <span>↗</span>
+        </a>
+      </div>
+    </section>
+  );
+}
+export function Blessings({ view }) {
+  const [lit, setLit] = useSaved("diya", false),
+    [secret, setSecret] = useSaved("secret", false);
+  const taps = useRef(0);
+  const { burst, notify } = useMagic();
+  return (
+    <section className={`blessings section ${lit ? "lit" : ""}`}>
+      <p className="eyebrow reveal">A LITTLE LIGHT. A LOT OF LOVE.</p>
+      <h2 className="reveal">
+        Your blessings,
+        <br />
+        our <i>brightest beginning.</i>
+      </h2>
+      <button
+        className={`diya ${lit ? "lit" : ""}`}
+        data-cursor="LIGHT"
+        aria-label={lit ? "Diya is lit" : "Light the diya"}
+        aria-pressed={lit}
+        onClick={() => {
+          setLit(true);
+          burst("✦");
+          notify("May this new beginning always be filled with light.");
+        }}
+      >
+        <span aria-hidden="true">🪔</span>
+        <small>{lit ? "A LIGHT FOR OUR FOREVER" : "LIGHT IT ✧"}</small>
+      </button>
+      <p className="diya-message">
+        {lit
+          ? "May this new beginning always be filled with light."
+          : "A small flame. A heartfelt wish."}
+      </p>
+      <button
+        className="button"
+        onClick={() => {
+          burst("♥", 50, 70, 20);
+          notify("Your blessings mean the world to us.");
+        }}
+      >
+        SEND A BLESSING <span>♡</span>
+      </button>
+      <div className="blessing-monogram">
+        D{" "}
+        <button
+          aria-label="Little heart"
+          className={secret ? "discovered" : ""}
+          onClick={() => {
+            taps.current++;
+            if (taps.current % 3 === 0) {
+              setSecret(true);
+              burst("🌹");
+              view({
+                src: d.images.main,
+                alt: "You found our little secret ❤️ — Some moments are worth discovering.",
+              });
+            }
+          }}
+        >
+          ♥
+        </button>{" "}
+        P
+      </div>
+    </section>
+  );
+}
+export function FinalInvitation({ view }) {
+  const { notify, burst } = useMagic();
+  const end = useRef(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          burst("✦", 50, 85, 12);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.35 },
+    );
+    if (end.current) observer.observe(end.current);
+    return () => observer.disconnect();
+  }, []);
+  return (
+    <>
+      <section className="portrait-section section">
+        <div className="portrait-frame reveal">
+          <button
+            data-cursor="VIEW"
+            onClick={() =>
+              view({ src: d.images.main, alt: "Danish and Priyanka together" })
+            }
+          >
+            <img
+              src={d.images.main}
+              alt="Danish and Priyanka, together"
+              loading="lazy"
+            />
+          </button>
+        </div>
+        <div className="portrait-copy reveal">
+          <p className="eyebrow">TOGETHER IS</p>
+          <h2>
+            A beautiful
+            <br />
+            place <i>to be.</i>
+          </h2>
+          <p className="signature">Danish & Priyanka</p>
+          <p>{d.date.display}</p>
+        </div>
+      </section>
+      <section id="invitation" className="save-section section">
+        <div className="save-card reveal">
+          <p className="eyebrow">SAVE THE DATE</p>
+          <h2>
+            Danish <i>&</i> Priyanka
+          </h2>
+          <div className="calendar-date">
+            <span>SATURDAY</span>
+            <strong>21</strong>
+            <span>
+              NOVEMBER
+              <br />
+              2026
+            </span>
+          </div>
+          <p className="eyebrow">
+            {d.venue.name} · {d.venue.city}
+          </p>
+          <button className="button" onClick={saveDate}>
+            ADD TO CALENDAR <span>↓</span>
+          </button>
+          <p className="small-note">A whole day for love. Timings to follow.</p>
+        </div>
+        <div className="share-love reveal">
+          <span>♡</span>
+          <p className="eyebrow">SHARE THE LOVE</p>
+          <h3>
+            Beautiful moments
+            <br />
+            are better <i>together.</i>
+          </h3>
+          <button
+            className="outline-button"
+            onClick={() => shareInvitation(notify)}
+          >
+            SHARE INVITATION ↗
+          </button>
+        </div>
+      </section>
+      <footer className="finale" ref={end}>
+        <div className="finale-image groom">
+          <img src={d.images.groom} alt="Danish says namaste" loading="lazy" />
+        </div>
+        <div className="finale-copy">
+          <p className="eyebrow">WE CAN'T WAIT TO CELEBRATE WITH YOU</p>
+          <h2>
+            With <i>love,</i>
+            <br />
+            Danish & Priyanka
+          </h2>
+          <p>See you on {d.date.display} ♡</p>
+          <p>
+            {d.venue.name} · {d.venue.city}
+          </p>
+          <div className="footer-actions">
+            <a href={d.venue.mapUrl} target="_blank" rel="noreferrer">
+              VIEW LOCATION ↗
+            </a>
+            <button onClick={saveDate}>SAVE THE DATE ↓</button>
+            <button onClick={() => shareInvitation(notify)}>
+              SHARE INVITATION ↗
+            </button>
+          </div>
+          <div className="monogram">
+            D <span>♥</span> P
+          </div>
+        </div>
+        <div className="finale-image bride">
+          <img
+            src={d.images.bride}
+            alt="Priyanka says namaste"
+            loading="lazy"
+          />
+        </div>
+      </footer>
+    </>
+  );
+}
