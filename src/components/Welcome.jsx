@@ -84,7 +84,7 @@ export function WelcomeCouple() {
               <p className="eyebrow">WITH THE BLESSINGS OF OUR FAMILIES</p>
               <p className="hero-overline">Two hearts, a thousand dreams,</p>
               <h1>
-                Danish <i>weds</i> Priyanka
+                Priyanka <i>weds</i> Danish
               </h1>
               <div className="hero-rule">
                 <span>✧</span>
