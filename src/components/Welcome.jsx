@@ -49,7 +49,7 @@ export function WelcomeCouple() {
     >
       <div className="hero-top">
         <span className="brand">
-          D <i>&</i> P
+          P <i>&</i> D
         </span>
         <span className="eyebrow">THE WEDDING CELEBRATION</span>
         <span className="edition">21.11.26</span>
@@ -115,7 +115,7 @@ export function WelcomeCouple() {
             {magic && (
               <div className="magic-words" role="status">
                 <span className="infinity">∞</span>
-                <span className="magic-monogram">D ♥ P</span>
+                <span className="magic-monogram">P ♥ D</span>
                 <p>Two hearts. One beautiful forever.</p>
               </div>
             )}

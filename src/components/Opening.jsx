@@ -14,7 +14,7 @@ export default function Opening({ onOpen }) {
       {loading ? (
         <div className="loading">
           <div className="monogram">
-            D <span>♥</span> P
+            P <span>♥</span> D
           </div>
           <p>Preparing something beautiful...</p>
         </div>
@@ -34,13 +34,13 @@ export default function Opening({ onOpen }) {
               <span className="ornament">❧</span>
               <p className="eyebrow">YOU'RE INVITED</p>
               <h1>
-                Danish <i>&</i> Priyanka
+                Priyanka <i>&</i> Danish
               </h1>
               <p className="invitation-sub">
                 Two hearts. One beautiful forever.
               </p>
               <div className="seal" aria-hidden="true">
-                D <small>&</small> P
+                P <small>&</small> D
               </div>
               <p className="date-line">{d.date.short}</p>
               <p className="eyebrow">
